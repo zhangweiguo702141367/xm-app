@@ -7,6 +7,13 @@ import store from './store'
 import YDUI from 'vue-ydui'
 import 'vue-ydui/dist/ydui.rem.css'
 /* 使用px：import 'vue-ydui/dist/ydui.px.css'; */
+import FastClick from 'fastclick'
+
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', function () {
+    FastClick.attach(document.body)
+  }, false)
+}
 
 Vue.use(YDUI)
 

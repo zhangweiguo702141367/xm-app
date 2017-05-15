@@ -14,7 +14,9 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "css-loader": "^0.28.1",
+    "fastclick": "^1.0.6",
     "jQuery": "^1.7.4",
     "vue": "^2.2.6",
     "vue-loader": "^11.3.4",
