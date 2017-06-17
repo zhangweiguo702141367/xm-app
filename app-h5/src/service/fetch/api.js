@@ -6,5 +6,11 @@ export default {
   },
   login (params) {
     return fetch('/inner/member/phoneLogin', params)
+  },
+  getRegisterSmsCode (params) {
+    return fetch('/inner/member/getRegisterSmsCode', params)
+  },
+  register (params) {
+    return fetch('/inner/member/register', params)
   }
 }

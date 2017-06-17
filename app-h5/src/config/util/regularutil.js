@@ -31,3 +31,13 @@ export const password = name => {
   console.debug(name)
   return '合法'
 }
+export const code6 = code => {
+  if (code.length === 0 || code.length !== 6) {
+    return '请输入6位数字验证码！'
+  }
+  let pasreg = /\d{6}/
+  if (!pasreg.test(code)) {
+    return '请输入6位数字验证码！'
+  }
+  return '合法'
+}

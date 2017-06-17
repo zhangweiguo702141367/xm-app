@@ -15,7 +15,7 @@
             <yd-input  slot="right" required v-model="register_code" max="20" required showCancleIcon="false" :showSuccessIcon="false" :showErrorIcon="false" placeholder="请输入验证码" class="yd-cell-right yd-cell-smscode"></yd-input>
               <yd-sendcode slot="right" 
                          @click.native="sendCode" 
-                         second="15"
+                         second="60"
                          type="warning"
                          initStr="获取验证码"
                          resetStr="重新获取"
@@ -25,14 +25,14 @@
         </yd-cell-item>
             <yd-cell-item>
             <span slot="left" class="yd-cell-left">昵称</span>
-            <yd-input slot="right" required v-model="register_nickname" max="20" required :showSuccessIcon="false" :showErrorIcon="false" placeholder="请输入手机号" class="yd-cell-right"></yd-input>
+            <yd-input slot="right" required v-model="register_nickname" max="20" required :showSuccessIcon="false" :showErrorIcon="false" placeholder="请输入昵称" class="yd-cell-right"></yd-input>
         </yd-cell-item>
         <yd-cell-item>
             <span slot="left" class="yd-cell-left">密码</span>
             <yd-input slot="right" type="password" v-model="register_password" placeholder="6-16位字母/数字" class="yd-cell-right"></yd-input>
         </yd-cell-item>
     </yd-cell-group>
-    <yd-button size="large" :type="committype" @click.native="handleClick" class="login_commit">下一步</yd-button>
+    <yd-button size="large" :type="committype" @click.native="register" class="login_commit">下一步</yd-button>
     <div class="gologin">
       <router-link to="/"><span class="golong_font">已有帐号登录</span></router-link>
     </div>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import {loginName, registerName, password} from '@/config/util/regularutil'
+import {loginName, registerName, password, code6} from '@/config/util/regularutil'
 export default {
   created () {
     this.$store.dispatch('changeTitile', '注册')
@@ -54,32 +54,44 @@ export default {
       register_password: '',
       register_nickname: '',
       register_code: '',
-      smscode: true,
+      smscode: false,
       smscodetype: 'disabled',
       btntype: 'primary'
     }
   },
   methods: {
-    handleClick () {
+    // 注册信息提交
+    register () {
       let loginNameRegular = loginName(this.register_phone)
       if (loginNameRegular === '合法') {
       } else {
         this.$dialog.alert({mes: loginNameRegular})
+        return
+      }
+      let regCode = code6(this.register_code)
+      if (regCode === '合法') {
+      } else {
+        this.$dialog.alert({mes: regCode})
+        return
       }
       let regPassword = password(this.register_password)
       if (regPassword === '合法') {
       } else {
         this.$dialog.alert({mes: regPassword})
+        return
       }
       let params = {
         'login_name': this.register_phone,
-        'password': this.register_password
+        'password': this.register_password,
+        'code': this.register_code,
+        'nick_name': this.register_nickname
       }
-      this.fetch.login(params)
+      this.fetch.register(params)
       .then(res => {
-        if (res.status === '200') {
+        if (res.status === 200) {
+          this.smscode = true
           this.$dialog.toast({
-            mes: '登录成功',
+            mes: '恭喜您注册成功',
             timeout: 1500,
             icon: 'success'
           })
@@ -91,17 +103,62 @@ export default {
         this.$dialog.alert({mes: error.data})
       })
     },
+    // 获取注册验证码
     sendCode () {
+      let params = {
+        'mobile_phone': this.register_phone
+      }
+      // 先判断手机号
+      this.fetch.isPhone(params)
+      .then(res => {
+        if (res.status === 200) {
+          this.sendRealCode()
+        } else {
+          if (res.message === '手机号已注册!') {
+            this.$dialog.alert({mes: '您的手机号已被注册,请更换手机号'})
+          } else if (res.message === '手机号已被绑定!') {
+            this.$dialog.confirm({
+              title: '选填标题',
+              mes: '该手机已被绑定，注册成功后将自动解绑',
+              opts: () => {
+                this.sendRealCode()
+              }
+            })
+          } else {
+            this.$dialog.alert({mes: res.message})
+          }
+        }
+      })
+      .catch(error => {
+        this.$dialog.alert({mes: error.data})
+      })
+    },
+    sendRealCode () {
+      let params = {
+        'mobile_phone': this.register_phone
+      }
       this.$dialog.loading.open('发送中...')
-      setTimeout(() => {
-        this.start = true
-        this.$dialog.loading.close()
-        this.$dialog.toast({
-          mes: '已发送',
-          icon: 'success',
-          timeout: 1500
-        })
-      }, 1000)
+      this.fetch.getRegisterSmsCode(params)
+      .then(res => {
+        if (res.status === 200) {
+          this.smscode = true
+          setTimeout(() => {
+            this.start = true
+            this.$dialog.loading.close()
+            this.$dialog.toast({
+              mes: '已发送',
+              icon: 'success',
+              timeout: 1500
+            })
+          }, 1000)
+        } else {
+          this.$dialog.alert({mes: res.message})
+        }
+      })
+      .catch(error => {
+        this.$dialog.alert({mes: error.data})
+      })
+      this.$dialog.loading.close()
     },
     handleClick1 () {}
   },
