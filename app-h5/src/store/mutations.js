@@ -8,5 +8,13 @@ export default {
   [types.CHANGE_TITLE] (state, title) {
     state.title = title
     setStore('title', title)
+  },
+  [types.NEXT_URL] (state, nexturl) {
+    state.loginurl = nexturl
+    setStore('loginurl', nexturl)
+  },
+  [types.GET_NEXT_URL] (state, nexturl) {
+    state.loginurl = nexturl
+    setStore('loginurl', nexturl)
   }
 }

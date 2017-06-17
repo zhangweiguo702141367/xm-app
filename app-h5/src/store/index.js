@@ -6,7 +6,8 @@ import actions from './action'
 Vue.use(Vuex)
 
 const state = {
-  title: '首页'// 标题
+  title: '首页', // 标题
+  loginurl: '/' // 登录成功后跳转页面
 }
 
 export default new Vuex.Store({

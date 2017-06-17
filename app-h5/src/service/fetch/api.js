@@ -1,7 +1,10 @@
 import {fetch} from '@/config/util/fetch'
 
 export default {
-  Login (params) {
+  isPhone (params) {
     return fetch('/inner/member/isPhone', params)
+  },
+  login (params) {
+    return fetch('/inner/member/phoneLogin', params)
   }
 }

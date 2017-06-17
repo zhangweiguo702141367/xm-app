@@ -32,7 +32,7 @@ export default {
   methods: {
     _login () {
       let formData = {'mobile_phone': '13834412687'}
-      this.fetch.Login(formData)
+      this.fetch.isPhone(formData)
       .then(res => {
         console.log('111', res)
         if (res.status === '200') {
