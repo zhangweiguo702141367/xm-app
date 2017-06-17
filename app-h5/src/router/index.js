@@ -1,8 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 const hello = r => require.ensure([], () => r(require('@/components/Hello')), 'hello')
+// 登录
 const login = r => require.ensure([], () => r(require('@/components/login/Login')), 'login')
+// 注册
 const register = r => require.ensure([], () => r(require('@/components/login/Register')), 'register')
+// 未登录忘记密码公共页面
+const commonforget = r => require.ensure([], () => r(require('@/components/login/forget/Common')), 'commonforget')
+// 邮箱找回
+const emailforget = r => require.ensure([], () => r(require('@/components/login/forget/Email')), 'emailforget')
+// 手机号找回
+const phoneforget = r => require.ensure([], () => r(require('@/components/login/forget/Phone')), 'phoneforget')
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +29,21 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: register
+    },
+    {
+      path: '/commonforget',
+      name: 'commonforget',
+      component: commonforget
+    },
+    {
+      path: '/emailforget',
+      name: 'emailforget',
+      component: emailforget
+    },
+    {
+      path: '/phoneforget',
+      name: 'phoneforget',
+      component: phoneforget
     }
   ]
 })

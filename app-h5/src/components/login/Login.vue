@@ -22,7 +22,7 @@
               <span class="register_font">立即注册</span></router-link>
             </yd-flexbox-item>
             <yd-flexbox-item class="forget">
-              <router-link to="/forgetpwd"><span class="forget_font">忘记密码</span></router-link>
+              <router-link to="/commonforget"><span class="forget_font">忘记密码</span></router-link>
             </yd-flexbox-item>
     </yd-flexbox>
     <hr class="hr_line">
