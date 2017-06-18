@@ -12,9 +12,7 @@ import 'vue-ydui/dist/ydui.rem.css'
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import VueStar from 'vue-star'
-import CircleMenu from 'vue-circle-menu'
 
-Vue.component('CircleMenu', CircleMenu)
 Vue.component('VueStar', VueStar)
 
 Vue.use(MuseUI)

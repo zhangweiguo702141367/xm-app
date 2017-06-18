@@ -4,7 +4,8 @@ import qs from 'qs'
 // axios 配置
 axios.defaults.timeout = 5000
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-axios.defaults.baseURL = 'http://www.lxiaomei.com'
+// axios.defaults.baseURL = 'http://www.lxiaomei.com'
+axios.defaults.baseURL = 'http://h5jr.jr.baihe.com:20000'
 
 // POST传参序列化
 axios.interceptors.request.use((config) => {

@@ -6,22 +6,22 @@ export const setStore = (name, content) => {
   if (typeof content !== 'string') {
     content = JSON.stringify(content)
   }
-  window.localStorage.setItem(name, content)
+  window.sessionStorage.setItem(name, content)
 }
 // 获取localStorage
 export const getStore = name => {
   if (!name) return
-  return window.localStorage.getItem(name)
+  return window.sessionStorage.getItem(name)
 }
 // 删除localStorage
 export const removeStore = name => {
   if (!name) return
-  window.localStorage.removeItem(name)
+  window.sessionStorage.removeItem(name)
 }
 // 清空数据
 export const clearData = () => {
-  if (!window.localStorage) return false
-  else var storage = window.localStorage
+  if (!window.sessionStorage) return false
+  else var storage = window.sessionStorage
   storage.clear()
 }
 // 修改数据
@@ -30,8 +30,8 @@ export const upDateData = (key, value) => {
 }
 // 查询数据
 export const queryData = (key) => {
-  if (!window.localStorage) return false
-  else var storage = window.localStorage
+  if (!window.sessionStorage) return false
+  else var storage = window.sessionStorage
   return JSON.parse(storage.getItem(key))
 }
 export const formatDate = (date, fmt) => {
