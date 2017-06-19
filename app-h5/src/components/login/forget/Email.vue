@@ -1,187 +1,49 @@
 <template>
-  <div class="ResgiterCtrl">
+  <div class="EmailCtrl">
      <yd-navbar :title="xmtitle">
-        <router-link to="/" slot="left">
+        <router-link to="/login" slot="left">
             <yd-navbar-back-icon></yd-navbar-back-icon>
         </router-link>
     </yd-navbar>
-     <yd-cell-group>
+    <div class="emailbody">
+      <div class="">邮件已发送,请您前往激活,并修改您的登录密码</div>
+      <div>如您还有其他问题请，填写下面信息</div>
+      <div>我们将在一个工作日内给您回复</div>
+      <label class="emailtitle">咨询标题</label>
+      <yd-cell-group>
+          <yd-cell-item>
+              <yd-input slot="right" v-model="title" required :showSuccessIcon="false" :showErrorIcon="false" regex="mobile" placeholder="请输入标题"></yd-input>
+          </yd-cell-item>
+      </yd-cell-group>
+      <yd-cell-group title="咨询内容">
         <yd-cell-item>
-            <span slot="left" class="yd-cell-left">手机号</span>
-            <yd-input slot="right" required v-model="register_phone" max="20" required :showSuccessIcon="false" :showErrorIcon="false" placeholder="请输入手机号" class="yd-cell-right"></yd-input>
+            <yd-textarea slot="right" placeholder="请详细说明您遇到的问题" maxlength="100"></yd-textarea>
         </yd-cell-item>
-        <yd-cell-item>
-            <span slot="left" class="yd-cell-left">验证码</span>
-            <yd-input  slot="right" required v-model="register_code" max="20" required showCancleIcon="false" :showSuccessIcon="false" :showErrorIcon="false" placeholder="请输入验证码" class="yd-cell-right yd-cell-smscode"></yd-input>
-              <yd-sendcode slot="right" 
-                         @click.native="sendCode" 
-                         second="60"
-                         type="warning"
-                         initStr="获取验证码"
-                         resetStr="重新获取"
-                         class="yd-smscode"
-                         :type="smstype"
-            ></yd-sendcode>
-        </yd-cell-item>
-            <yd-cell-item>
-            <span slot="left" class="yd-cell-left">昵称</span>
-            <yd-input slot="right" required v-model="register_nickname" max="20" required :showSuccessIcon="false" :showErrorIcon="false" placeholder="请输入昵称" class="yd-cell-right"></yd-input>
-        </yd-cell-item>
-        <yd-cell-item>
-            <span slot="left" class="yd-cell-left">密码</span>
-            <yd-input slot="right" type="password" v-model="register_password" placeholder="6-16位字母/数字" class="yd-cell-right"></yd-input>
-        </yd-cell-item>
-    </yd-cell-group>
-    <yd-button size="large" :type="committype" @click.native="register" class="login_commit">下一步</yd-button>
-    <div class="gologin">
-      <router-link to="/"><span class="golong_font">已有帐号登录</span></router-link>
+      </yd-cell-group>
+      <yd-button-group>
+        <yd-button size="large" @click.native="handleClick" type="disabled">问题提交</yd-button>
+    </yd-button-group>
     </div>
-    <!--  <vue-star animate="animated rubberBand" color="#F05654">
-      <a slot="icon" class="fa fa-heart" @click="handleClick1"></a>
-    </vue-star> -->
   </div>
 </template>
 
 <script>
-import {loginName, registerName, password, code6} from '@/config/util/regularutil'
 export default {
   created () {
-    this.$store.dispatch('changeTitile', '邮箱找回')
+    this.$store.dispatch('changeTitile', '邮件发送成功')
   },
   data () {
     return {
-      register_phone: '',
-      register_password: '',
-      register_nickname: '',
-      register_code: '',
-      smscode: false,
-      smscodetype: 'disabled',
-      btntype: 'primary'
+      title: ''
     }
   },
   methods: {
-    // 注册信息提交
-    register () {
-      let loginNameRegular = loginName(this.register_phone)
-      if (loginNameRegular === '合法') {
-      } else {
-        this.$dialog.alert({mes: loginNameRegular})
-        return
-      }
-      let regCode = code6(this.register_code)
-      if (regCode === '合法') {
-      } else {
-        this.$dialog.alert({mes: regCode})
-        return
-      }
-      let regPassword = password(this.register_password)
-      if (regPassword === '合法') {
-      } else {
-        this.$dialog.alert({mes: regPassword})
-        return
-      }
-      let params = {
-        'login_name': this.register_phone,
-        'password': this.register_password,
-        'code': this.register_code,
-        'nick_name': this.register_nickname
-      }
-      this.fetch.register(params)
-      .then(res => {
-        if (res.status === 200) {
-          this.smscode = true
-          this.$dialog.toast({
-            mes: '恭喜您注册成功',
-            timeout: 1500,
-            icon: 'success'
-          })
-        } else {
-          this.$dialog.alert({mes: res.message})
-        }
-      })
-      .catch(error => {
-        this.$dialog.alert({mes: error.data})
-      })
-    },
-    // 获取注册验证码
-    sendCode () {
-      let params = {
-        'mobile_phone': this.register_phone
-      }
-      // 先判断手机号
-      this.fetch.isPhone(params)
-      .then(res => {
-        if (res.status === 200) {
-          this.sendRealCode()
-        } else {
-          if (res.message === '手机号已注册!') {
-            this.$dialog.alert({mes: '您的手机号已被注册,请更换手机号'})
-          } else if (res.message === '手机号已被绑定!') {
-            this.$dialog.confirm({
-              title: '选填标题',
-              mes: '该手机已被绑定，注册成功后将自动解绑',
-              opts: () => {
-                this.sendRealCode()
-              }
-            })
-          } else {
-            this.$dialog.alert({mes: res.message})
-          }
-        }
-      })
-      .catch(error => {
-        this.$dialog.alert({mes: error.data})
-      })
-    },
-    sendRealCode () {
-      let params = {
-        'mobile_phone': this.register_phone
-      }
-      this.$dialog.loading.open('发送中...')
-      this.fetch.getRegisterSmsCode(params)
-      .then(res => {
-        if (res.status === 200) {
-          this.smscode = true
-          setTimeout(() => {
-            this.start = true
-            this.$dialog.loading.close()
-            this.$dialog.toast({
-              mes: '已发送',
-              icon: 'success',
-              timeout: 1500
-            })
-          }, 1000)
-        } else {
-          this.$dialog.alert({mes: res.message})
-        }
-      })
-      .catch(error => {
-        this.$dialog.alert({mes: error.data})
-      })
-      this.$dialog.loading.close()
-    },
-    handleClick1 () {}
+    handleClick () {
+    }
   },
   computed: {
     xmtitle () {
       return this.$store.state.title
-    },
-    smstype () {
-      let registername = registerName(this.register_phone)
-      if (registername === '合法') {
-        this.smscodetype = 'warning'
-      } else {
-        this.smscodetype = 'disabled'
-      }
-      return this.smscodetype
-    },
-    committype () {
-      if (this.register_phone !== '' && this.register_password !== '' && this.smscode && this.register_nickname !== '') {
-        this.btntype = 'primary'
-      } else {
-        this.btntype = 'disabled'
-      }
-      return this.btntype
     }
   }
 }
@@ -192,24 +54,12 @@ export default {
 .m-navbar{
   margin-bottom:0.6rem;
 }
-.yd-cell-left{
-  margin-right: .4rem;
+.emailbody{
+  margin-left: 5%;
+  width: 90%;
+  height: 0.9rem;
 }
-.yd-cell-right{
-  padding-right:0.30rem;
-}
-.gologin{
-  margin-top: 1rem;
-  text-align: center;
-}
-.golong_font{
-  color: #72ACE3;
-}
-.yd-cell-smscode{
-  width: 60%;
-  left:0;
-}
-.yd-smscode{
-  width: 35%;
+.emailtitle{
+  text-align: left;
 }
 </style>

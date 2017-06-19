@@ -23,5 +23,13 @@ export default {
   // 手机修改密码
   forgetPassword (params) {
     return fetch('/inner/member/forgetPassword', params)
+  },
+   // 邮箱方式(发送邮件)修改密码
+  emailForgetPassword (params) {
+    return fetch('/inner/member/emailForgetPassword', params)
+  },
+   // 邮箱方式(修改密码)修改密码
+  emailChangePassword (params) {
+    return fetch('/inner/member/emailChangePassword', params)
   }
 }

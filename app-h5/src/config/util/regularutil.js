@@ -41,3 +41,13 @@ export const code6 = code => {
   }
   return '合法'
 }
+export const emailLegal = emailval => {
+  if (emailval.length === 0) {
+    return '请输入认证邮箱！'
+  }
+  let pasreg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*.\w+([-.]\w+)*$/
+  if (!pasreg.test(emailval)) {
+    return '请输入合法的邮箱地址！'
+  }
+  return '合法'
+}

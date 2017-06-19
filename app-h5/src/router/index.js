@@ -11,6 +11,8 @@ const commonforget = r => require.ensure([], () => r(require('@/components/login
 const emailforget = r => require.ensure([], () => r(require('@/components/login/forget/Email')), 'emailforget')
 // 手机号找回
 const phoneforget = r => require.ensure([], () => r(require('@/components/login/forget/Phone')), 'phoneforget')
+// 邮箱修改登录密码页
+const emailChangePassword = r => require.ensure([], () => r(require('@/components/login/forget/EmailChangePassword')), 'emailChangePassword')
 Vue.use(Router)
 
 export default new Router({
@@ -49,6 +51,11 @@ export default new Router({
       path: '/phoneforget',
       name: 'phoneforget',
       component: phoneforget
+    },
+    {
+      path: '/emailpwd',
+      name: 'emailChangePassword',
+      component: emailChangePassword
     }
   ]
 })

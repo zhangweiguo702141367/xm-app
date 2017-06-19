@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {loginName, registerName} from '@/config/util/regularutil'
+import {loginName, registerName, emailLegal} from '@/config/util/regularutil'
 export default {
   created () {
     this.$store.dispatch('changeTitile', '忘记密码')
@@ -53,7 +53,7 @@ export default {
         return
       }
       let params = {
-        'mobile_phone': this.login_name
+        'login_name': this.login_name
       }
       if (this.forget_type === 'phone') {
         // 如果是登录名找回
@@ -71,6 +71,26 @@ export default {
         })
       } else if (this.forget_type === 'email') {
         // 否则为邮箱找回
+        let forgetEmailRegular = emailLegal(this.forget_email)
+        if (forgetEmailRegular === '合法') {
+        } else {
+          this.$dialog.alert({mes: forgetEmailRegular})
+          return
+        }
+        params.email = this.forget_email
+        // 邮箱登录名校验并发送邮件
+        this.fetch.emailForgetPassword(params)
+        .then(res => {
+          if (res.status === 200) {
+            // 如果邮件发送成功则跳转成功页面
+            this.$router.push('/emailforget')
+          } else {
+            this.$dialog.alert({mes: res.message})
+          }
+        })
+        .catch(error => {
+          this.$dialog.alert({mes: error.data})
+        })
       }
     }
   },
