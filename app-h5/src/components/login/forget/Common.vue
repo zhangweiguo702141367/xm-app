@@ -15,8 +15,12 @@
             <yd-input slot="right" required v-model="forget_email" max="20" required :showSuccessIcon="false" :showErrorIcon="false" placeholder="请输入认证邮箱" class="yd-cell-right"></yd-input>
          </yd-cell-item>
         <div class="forget_type">
-            <mu-radio label="手机找回" name="group" nativeValue="phone" v-model="forget_type"  :change="forgetchange" class="demo-radio forget_left" uncheckIcon="phone" checkedIcon="phone"/>
-            <mu-radio label="邮箱找回" name="group" nativeValue="email" v-model="forget_type"  :change="forgetchange" class="demo-radio" uncheckIcon="mail outline" checkedIcon="mail outline"/>
+            <!-- <mu-radio label="手机找回" name="group" nativeValue="phone" v-model="forget_type"  :change="forgetchange" class="demo-radio forget_left" uncheckIcon="phone" checkedIcon="phone"/>
+            <mu-radio label="邮箱找回" name="group" nativeValue="email" v-model="forget_type"  :change="forgetchange" class="demo-radio" uncheckIcon="mail outline" checkedIcon="mail outline"/> -->
+            <yd-radio-group v-model="forget_type">
+              <yd-radio val="phone"  class="forget_type_style" :change="forgetchange">手机找回</yd-radio>
+              <yd-radio val="email"  class="forget_type_style" :change="forgetchange">邮箱找回</yd-radio>
+          </yd-radio-group>
         </div>
     </yd-cell-group>
     <yd-button size="large" :type="committype" @click.native="next_commit" class="login_commit">{{button_name}}</yd-button>
@@ -121,6 +125,10 @@ export default {
 .forget_type{
   padding-top: 0.25rem;
   height: 1rem;
+}
+.forget_type_style{
+  width: 45%;
+  text-align: center;
 }
 .forget_left{
   margin-right: 1rem;

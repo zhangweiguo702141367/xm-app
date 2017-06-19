@@ -25,23 +25,34 @@
               <router-link to="/commonforget"><span class="forget_font">忘记密码</span></router-link>
             </yd-flexbox-item>
     </yd-flexbox>
-    <hr class="hr_line">
-     <yd-grids-group :rows="3">
+    <div class="otherLogin">
+      <div class="tit"><span>其他账号登录</span></div>
+      <!-- <yd-grids-group :rows="3">
         <yd-grids-item link="/qqlogin" class="loginicon">
-            <img slot="icon" src="../../assets/images/vxLogin.png">
-            <span slot="text">微信登录</span>
+          <img slot="icon" src="../../assets/images/vxLogin.png">
+          <span slot="text">微信登录</span>
         </yd-grids-item>
-        
         <yd-grids-item link="/vxlogin" class="loginicon">
-            <img slot="icon" src="../../assets/images/qqLogin.png">
-            <span slot="text">QQ登录</span>
+          <img slot="icon" src="../../assets/images/qqLogin.png">
+          <span slot="text">QQ登录</span>
         </yd-grids-item>
-
-         <yd-grids-item link="/wblogin" class="loginicon">
-            <img slot="icon" src="../../assets/images/qqLogin.png">
-            <span slot="text">微博</span>
+        <yd-grids-item link="/wblogin" class="loginicon">
+          <img slot="icon" src="../../assets/images/qqLogin.png">
+          <span slot="text">微博</span>
         </yd-grids-item>
-    </yd-grids-group>
+      </yd-grids-group> -->
+      <ul>    
+        <li>
+          <a onclick="baihe.bhtongji.tongji({'event':'3','spm':'6.26.434.1358.3519'});" href="http://open1.baihe.com/open/sinaweibo/sinaweiboLink.action?customReturnUrl=http://i.baihe.com%2f%23ctrl%3dregister%26act%3dopen1x"><span></span>微博</a>
+        </li>   
+        <li>
+          <a onclick="baihe.bhtongji.tongji({'event':'3','spm':'6.26.434.1359.3520'});" href="http://open1.baihe.com/open/QQ/QQLink.action?customReturnUrl=http://i.baihe.com%2f%23ctrl%3dregister%26act%3dopen1q"><span></span>QQ</a>
+        </li> 
+         <li>
+          <a onclick="baihe.bhtongji.tongji({'event':'3','spm':'6.26.434.1359.3520'});" href="http://open1.baihe.com/open/QQ/QQLink.action?customReturnUrl=http://i.baihe.com%2f%23ctrl%3dregister%26act%3dopen1q"><span></span>微信</a>
+        </li> 
+      </ul>
+    </div>
     <!--  <vue-star animate="animated rubberBand" color="#F05654">
       <a slot="icon" class="fa fa-heart" @click="handleClick1"></a>
     </vue-star> -->
@@ -140,9 +151,53 @@ export default {
 .forget_font{
   color: #000;
 }
-.hr_line{
-  margin-top:4rem;
-  margin-bottom: 0.5rem;
+.otherLogin{
+  position:absolute;
+  bottom:20px;
+  left:0; 
+  width:100%; 
+  text-align:center;
+}
+.otherLogin .tit{
+  margin-bottom:16px;
+  border-bottom:1px solid #e6e6e6;
+  vertical-align:middle;
+}
+.otherLogin .tit span{
+  position:relative; 
+  top:11px; 
+  display:block; 
+  width:120px; 
+  margin:0 auto; 
+  font:400 14px/1.6em "Microsoft YaHei"; 
+  color:#ddd; 
+  text-align:center; 
+  background:#f8f8f8;
+}
+.otherLogin ul{
+  margin:30px 0 0; 
+  overflow:hidden;
+}
+.otherLogin ul li{
+  float:left; 
+  width:33.33%; 
+  text-align:center;
+}
+.otherLogin ul li a{
+  font:400 13px/1.6em "Microsoft YaHei"; 
+  color:#999; 
+  text-decoration:none;
+}
+.otherLogin ul li span{
+  display:block; 
+  width:51px; 
+  height:51px; 
+  margin:0 auto 6px; 
+  background:url(http://static5.baihe.com/images/newH5/H5_ologin.png) no-repeat; 
+  background-size:100% auto;
+}
+.otherLogin ul li:nth-child(2) span{
+  background-position:0 -52px;
 }
 .loginicon{
   background-color: #F0F0F0;
