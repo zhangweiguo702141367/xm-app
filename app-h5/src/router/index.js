@@ -1,5 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/store'
+import * as storage from '@/config/util/storageutil'
+// 首页
+const index = r => require.ensure([], () => r(require('@/components/Index')), 'index')
+// hello
 const hello = r => require.ensure([], () => r(require('@/components/Hello')), 'hello')
 // 登录
 const login = r => require.ensure([], () => r(require('@/components/login/Login')), 'login')
@@ -14,13 +19,16 @@ const phoneforget = r => require.ensure([], () => r(require('@/components/login/
 // 邮箱修改登录密码页
 const emailChangePassword = r => require.ensure([], () => r(require('@/components/login/forget/EmailChangePassword')), 'emailChangePassword')
 Vue.use(Router)
-
-export default new Router({
+// 页面刷新时，重新赋值token
+if (storage.getStore('loginurl')) {
+  store.commit('SET_NEXT_URL', storage.getStore('loginurl'))
+}
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: login
+      name: 'index',
+      component: index
     },
     {
       path: '/login',
@@ -30,6 +38,9 @@ export default new Router({
     {
       path: '/hello',
       name: 'hello',
+      meta: {
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+      },
       component: hello
     },
     {
@@ -59,3 +70,21 @@ export default new Router({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(r => r.meta.requireAuth)) {
+    store.commit('SET_NEXT_URL', to.fullPath)
+    // 如果需要登录的页面用户已登录
+    if (storage.getStore('loginstatus') && storage.getStore('loginstatus') === 'ok') {
+      next()
+    } else { // 没登录则跳转到登录界面
+      next({
+        path: '/login',
+        query: {redirect: to.fullPath}
+      })
+    }
+  } else {
+    next()
+  }
+})
+export default router
+

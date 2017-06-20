@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import * as storage from '@/config/util/storageutil'
 
 // axios 配置
 axios.defaults.timeout = 5000
@@ -22,6 +23,11 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use((res) => {
   if (res.status === 200) {
 // _.toast(res.data.msg)
+    if (res.data.status !== 206) {
+      storage.setStore('loginstatus', 'ok')
+    } else {
+      storage.setStore('loginstatus', 'no login')
+    }
     return res
   } else {
     return Promise.reject(res)

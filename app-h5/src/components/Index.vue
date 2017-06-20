@@ -63,7 +63,7 @@
 import {loginName} from '@/config/util/regularutil'
 export default {
   created () {
-    this.$store.dispatch('changeTitile', '登录')
+    this.$store.dispatch('changeTitile', '首页展示')
   },
   data () {
     return {
@@ -86,18 +86,11 @@ export default {
       this.fetch.login(params)
       .then(res => {
         if (res.status === '200') {
-          console.debug(this.$store.state.loginurl)
           this.$dialog.toast({
             mes: '登录成功',
             timeout: 1500,
             icon: 'success'
           })
-          if (this.$store.state.loginurl) {
-            this.$router.push(this.$store.state.loginurl)
-          } else {
-            this.$router.push('/')
-          }
-          
         } else {
           this.$dialog.alert({mes: res.message})
         }
