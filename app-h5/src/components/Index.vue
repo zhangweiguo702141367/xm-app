@@ -33,6 +33,16 @@ export default {
     this.images = [{gourl: 'http://www.ydcss.com', imageurl: 'http://static.ydcss.com/uploads/ydui/1.jpg'},
                    {gourl: 'http://www.ydcss.com', imageurl: 'http://static.ydcss.com/uploads/ydui/2.jpg'},
                    {gourl: 'http://www.ydcss.com', imageurl: 'http://static.ydcss.com/uploads/ydui/3.jpg'}]
+    this.menus = [{menuimage: '', menulink: '/weather', menutext: ''},
+                  {menuimage: '', menulink: '', menutext: ''},
+                  {menuimage: '', menulink: '', menutext: ''},
+                  {menuimage: '', menulink: '', menutext: ''},
+                  {menuimage: '', menulink: '', menutext: ''},
+                  {menuimage: '', menulink: '', menutext: ''},
+                  {menuimage: '', menulink: '', menutext: ''},
+                  {menuimage: '', menulink: '', menutext: ''},
+                  {menuimage: '', menulink: '', menutext: ''},
+                  {menuimage: '', menulink: '', menutext: ''}]
   },
   data () {
     return {
