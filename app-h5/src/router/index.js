@@ -67,6 +67,11 @@ const router = new Router({
       path: '/emailpwd',
       name: 'emailChangePassword',
       component: emailChangePassword
+    },
+    {
+      path: '/index',
+      name: 'index',
+      component: index
     }
   ]
 })

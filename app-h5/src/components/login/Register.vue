@@ -115,7 +115,11 @@ export default {
             icon: 'success'
           })
           // 注册用户成功后跳转
-          this.$router.push('/emailforget')
+          if (this.$store.state.loginurl) {
+            this.$router.push(this.$store.state.loginurl)
+          } else {
+            this.$router.push('/')
+          }
         } else {
           this.$dialog.alert({mes: res.message})
         }
