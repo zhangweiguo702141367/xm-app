@@ -25,7 +25,27 @@
         </yd-cell-item>
         <yd-cell-item>
             <span slot="left" class="yd-cell-left">密码</span>
-            <yd-input slot="right" type="password" v-model="register_password" placeholder="6-16位字母/数字" class="yd-cell-right"></yd-input>
+            <yd-input slot="right" type="password" v-model="register_password" :change="passwordStrong" placeholder="6-16位字母/数字" class="yd-cell-right"></yd-input>
+        </yd-cell-item>
+        <yd-cell-item :class="{'strong_show': strong_can_show}">
+            <!-- <yd-rate slot="left" v-model="pwd" :showText="['很差','还行','一般','挺好','非常好']" readonly></yd-rate>
+            <span slot="right">密码强度检测</span> -->
+            <p class="all" slot="right">
+                <input type="radio" name="b" value="0"  v-model="inputdata" disabled/>
+                <span>★</span>
+                <input type="radio" name="b" value="1" v-model="inputdata" disabled/>
+                <span>★</span>
+                <input type="radio" name="b" value="2" v-model="inputdata" disabled/>
+                <span>★</span>
+                <input type="radio" name="b" value="3" v-model="inputdata" disabled/>
+                <span>★</span>
+                <input type="radio" name="b" value="4" v-model="inputdata" disabled/>
+                <span>★</span>
+                <input type="radio" name="b" value="5" v-model="inputdata" disabled/>
+                <span>★</span>
+                <span class="pwdtxt">{{pwdtext}}</span>
+              </p>
+              <span slot="left">密码强度</span>
         </yd-cell-item>
     </yd-cell-group>
     <yd-button size="large" :type="committype" @click.native="register" class="login_commit">下一步</yd-button>
@@ -39,19 +59,22 @@
 </template>
 
 <script>
-import {loginName, registerName, password, code6} from '@/config/util/regularutil'
+import {loginName, registerName, password, code6, pwdstrongcheck, pwdtextdesc} from '@/config/util/regularutil'
 export default {
   created () {
     this.$store.dispatch('changeTitile', '注册')
   },
   data () {
     return {
+      pwdtext: '较弱',
+      inputdata: '1',
       register_phone: '',
       register_password: '',
       register_code: '',
       smscode: false,
       smscodetype: 'disabled',
-      btntype: 'primary'
+      btntype: 'primary',
+      strong_can_show: true
     }
   },
   methods: {
@@ -77,6 +100,7 @@ export default {
       }
       let params = {
         'mobile_phone': this.register_phone,
+        'login_name': this.register_phone,
         'password': this.register_password,
         'code': this.register_code
       }
@@ -104,7 +128,8 @@ export default {
     // 获取注册验证码
     sendCode () {
       let params = {
-        'mobile_phone': this.register_phone
+        'mobile_phone': this.register_phone,
+        'login_name': this.register_phone
       }
       // 先判断手机号
       this.fetch.isPhone(params)
@@ -180,6 +205,16 @@ export default {
         this.btntype = 'disabled'
       }
       return this.btntype
+    },
+    passwordStrong () {
+      if (this.register_password !== '') {
+        this.strong_can_show = false
+        let num = pwdstrongcheck(this.register_password)
+        this.inputdata = num
+        this.pwdtext = pwdtextdesc(this.inputdata)
+      } else {
+        this.strong_can_show = true
+      }
     }
   }
 }
@@ -215,4 +250,23 @@ export default {
 .yd-smscode{
   width: 35%;
 }
+.strong_show{
+  display: none;
+}
+.all{
+  padding-right:1.2rem;
+}
+.all>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
+.all>input:nth-of-type(1),
+.all>span:nth-of-type(1){display:none;}
+.all>span{font-size:2em;color:gold;
+    -webkit-transition:color .2s;
+    transition:color .2s;
+}
+.pwdtxt{
+  margin-left: .3rem !important;
+  font-size: .26rem !important;
+}
+.all>input:checked~span{color:#666;}
+.all>input:checked+span{color:gold;}
 </style>

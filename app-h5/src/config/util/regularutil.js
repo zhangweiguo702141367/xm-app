@@ -51,3 +51,43 @@ export const emailLegal = emailval => {
   }
   return '合法'
 }
+export const pwdstrongcheck = password => {
+  let strongpwd = 1
+  if (password.length === 0 || password.length <= 6) {
+    return strongpwd
+  }
+  // 如果用户输入的密码 包含了数字
+  if (/\d/.test(password)) {
+    strongpwd = strongpwd + 1
+  }
+  // 如果用户输入的密码 包含了小写的a到z
+  if (/[a-z]/.test(password)) {
+    strongpwd = strongpwd + 1
+  }
+  // 如果用户输入的密码 包含了大写的A到Z
+  if (/[A-Z]/.test(password)) {
+    strongpwd = strongpwd + 1
+  }
+  // 如果是非数字 字母 下划线
+  if (/_/.test(password) || /\W/.test(password)) {
+    strongpwd = strongpwd + 1
+  }
+  return strongpwd
+}
+export const pwdtextdesc = pwdnum => {
+  if (pwdnum === '') {
+    pwdnum = 1
+  }
+  switch (pwdnum) {
+    case 1 :
+      return '较弱'
+    case 2 :
+      return '还行'
+    case 3 :
+      return '一般'
+    case 4 :
+      return '较强'
+    case 5 :
+      return '非常强'
+  }
+}
