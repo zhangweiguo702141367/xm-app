@@ -13,10 +13,6 @@ export default {
     state.loginurl = nexturl
     setStore('loginurl', nexturl)
   },
-  [types.SET_NEXT_URL] (state, nexturl) {
-    state.loginurl = nexturl
-    setStore('loginurl', nexturl)
-  },
   [types.SET_FORGET_LOGIN_NAME] (state, loginname) {
     state.loginname = loginname
     setStore('loginname', loginname)

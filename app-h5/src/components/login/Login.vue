@@ -97,7 +97,6 @@ export default {
           } else {
             this.$router.push('/')
           }
-          
         } else {
           this.$dialog.alert({mes: res.message})
         }
