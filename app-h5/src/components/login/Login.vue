@@ -69,7 +69,8 @@ export default {
     return {
       input1: '',
       input2: '',
-      btntype: 'primary'
+      btntype: 'primary',
+      loginnexturl: this.$store.state.loginurl
     }
   },
   methods: {
@@ -83,17 +84,18 @@ export default {
         'login_name': this.input1,
         'password': this.input2
       }
+      let loginsuccessurl = this.loginnexturl
       this.fetch.login(params)
       .then(res => {
-        if (res.status === '200') {
-          console.debug(this.$store.state.loginurl)
+        if (res.status === 200) {
+          console.debug(loginsuccessurl)
           this.$dialog.toast({
             mes: '登录成功',
             timeout: 1500,
             icon: 'success'
           })
-          if (this.$store.state.loginurl) {
-            this.$router.push(this.$store.state.loginurl)
+          if (loginsuccessurl) {
+            this.$router.push(loginsuccessurl)
           } else {
             this.$router.push('/')
           }
