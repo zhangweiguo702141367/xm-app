@@ -13,8 +13,8 @@
         <yd-cell-item>
             <span slot="left" class="yd-cell-left">验证码</span>
             <yd-input  slot="right" required v-model="register_code" max="20" required showCancleIcon="false" :showSuccessIcon="false" :showErrorIcon="false" placeholder="请输入验证码" class="yd-cell-right yd-cell-smscode"></yd-input>
-              <yd-sendcode slot="right" 
-                         @click.native="sendCode" 
+              <yd-sendcode slot="right"
+                         @click.native="sendCode"
                          second="60"
                          type="warning"
                          initStr="获取验证码"
@@ -24,7 +24,7 @@
             ></yd-sendcode>
         </yd-cell-item>
         <yd-cell-item>
-            <span slot="left" class="yd-cell-left">密码</span>
+            <span slot="left" class="yd-cell-left pd-right">密码</span>
             <yd-input slot="right" type="password" v-model="register_password" :change="passwordStrong" placeholder="6-16位字母/数字" class="yd-cell-right"></yd-input>
         </yd-cell-item>
         <yd-cell-item :class="{'strong_show': strong_can_show}">
@@ -258,7 +258,7 @@ export default {
   display: none;
 }
 .all{
-  padding-right:1.2rem;
+  padding-right:1em;
 }
 .all>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
 .all>input:nth-of-type(1),
@@ -268,9 +268,11 @@ export default {
     transition:color .2s;
 }
 .pwdtxt{
-  margin-left: .3rem !important;
-  font-size: .26rem !important;
+  margin-left: 1.8rem !important;
+  font-size: .3rem !important;
+  color: rgb(255, 0, 0) !important;
 }
 .all>input:checked~span{color:#666;}
 .all>input:checked+span{color:gold;}
+.pd-right{padding-right: .3rem;}
 </style>
