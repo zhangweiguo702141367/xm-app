@@ -88,6 +88,6 @@ export const pwdtextdesc = pwdnum => {
     case 4 :
       return '较强'
     case 5 :
-      return '非常强'
+      return '超强'
   }
 }
