@@ -18,6 +18,9 @@ const emailforget = r => require.ensure([], () => r(require('@/components/login/
 const phoneforget = r => require.ensure([], () => r(require('@/components/login/forget/Phone')), 'phoneforget')
 // 邮箱修改登录密码页
 const emailChangePassword = r => require.ensure([], () => r(require('@/components/login/forget/EmailChangePassword')), 'emailChangePassword')
+// 天气状况
+const weatherShow = r => require.ensure([], () => r(require('@/components/weather/WeatherShow')), 'weatherShow')
+
 Vue.use(Router)
 // 页面刷新时，重新赋值token
 if (storage.getStore('loginurl')) {
@@ -72,6 +75,14 @@ const router = new Router({
       path: '/index',
       name: 'index',
       component: index
+    },
+    {
+      path: '/weatherShow',
+      name: 'weatherShow',
+      meta: {
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+      },
+      component: weatherShow
     }
   ]
 })

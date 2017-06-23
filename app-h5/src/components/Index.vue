@@ -8,9 +8,9 @@
       </yd-slider-item>
     </yd-slider>
     <yd-grids-group :rows="5">
-        <yd-grids-item v-for="n in 10" link="/login">
+        <yd-grids-item v-for="n in 10" link="/weatherShow">
             <img slot="icon" src="../assets/images/xm.jpg" class="menu">
-            <span slot="text">image</span>
+           <span slot="text">image</span>
         </yd-grids-item>
     </yd-grids-group>
     <div class="demo-rollnotice"><img src="//st.360buyimg.com/m/images/index/jd-news-tit.png">
@@ -19,6 +19,18 @@
           <yd-rollnotice-item><span style="color:#F00;"> 荐 </span>3.23京东超级品牌日格力盛典</yd-rollnotice-item>
           <yd-rollnotice-item><span style="color:#F00;"> 荐 </span>京东服饰 早春新品低至7折</yd-rollnotice-item>
       </yd-rollnotice>
+    <yd-tabbar fixed=true>
+        <yd-tabbar-item title="首页" link="#">
+            <yd-icon name="home-outline" slot="icon" size="0.54rem"></yd-icon>
+        </yd-tabbar-item>
+        <yd-tabbar-item title="购物车" link="#" dot>
+            <yd-icon name="shopcart-outline" slot="icon" size="0.54rem"></yd-icon>
+        </yd-tabbar-item>
+        <yd-tabbar-item title="个人中心" link="#" active>
+            <yd-icon name="ucenter" slot="icon" size="0.54rem"></yd-icon>
+            <yd-badge slot="badge" type="danger">2</yd-badge>
+        </yd-tabbar-item>
+    </yd-tabbar>  
     </div>
     <!--  <vue-star animate="animated rubberBand" color="#F05654">
       <a slot="icon" class="fa fa-heart" @click="handleClick1"></a>

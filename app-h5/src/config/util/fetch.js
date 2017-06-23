@@ -4,6 +4,7 @@ import * as storage from '@/config/util/storageutil'
 
 // axios 配置
 axios.defaults.timeout = 5000
+axios.defaults.withCredentials = true
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // axios.defaults.baseURL = 'http://www.lxiaomei.com'
 axios.defaults.baseURL = 'http://h5jr.jr.baihe.com:20000'
@@ -24,7 +25,11 @@ axios.interceptors.response.use((res) => {
   if (res.status === 200) {
 // _.toast(res.data.msg)
     if (res.data.status !== 206) {
-      storage.setStore('loginstatus', 'ok')
+      if (res.data.loginStatus === true) {
+        storage.setStore('loginstatus', 'ok')
+      } else {
+        storage.setStore('loginstatus', 'no login')
+      }
     } else {
       storage.setStore('loginstatus', 'no login')
     }

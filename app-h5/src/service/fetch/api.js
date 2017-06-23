@@ -31,5 +31,9 @@ export default {
    // 邮箱方式(修改密码)修改密码
   emailChangePassword (params) {
     return fetch('/inner/member/emailChangePassword', params)
+  },
+  // 获取用户所在地天气情况
+  getWeather (params) {
+    return fetch('/inner/member/getWeather', params)
   }
 }
