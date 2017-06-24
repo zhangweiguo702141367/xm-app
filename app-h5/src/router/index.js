@@ -20,6 +20,8 @@ const phoneforget = r => require.ensure([], () => r(require('@/components/login/
 const emailChangePassword = r => require.ensure([], () => r(require('@/components/login/forget/EmailChangePassword')), 'emailChangePassword')
 // 天气状况
 const weatherShow = r => require.ensure([], () => r(require('@/components/weather/WeatherShow')), 'weatherShow')
+// 天气状况指数详情
+const exponential = r => require.ensure([], () => r(require('@/components/weather/Exponential')), 'exponential')
 
 Vue.use(Router)
 // 页面刷新时，重新赋值token
@@ -83,6 +85,14 @@ const router = new Router({
         requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
       },
       component: weatherShow
+    },
+    {
+      path: '/exponential',
+      name: 'exponential',
+      meta: {
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+      },
+      component: exponential
     }
   ]
 })

@@ -53,6 +53,31 @@ export const formatDate = (date, fmt) => {
   }
   return fmt
 }
+// 获取时分秒
+export const hm = (date) => {
+  let dateTime = new Date(date * 1000)
+  let H = dateTime.getHours()
+  let m = dateTime.getMinutes()
+  if (m < 10) {
+    m = '0' + m
+  }
+  if (H < 10) {
+    H = '0' + H
+  }
+  return H.toString() + ':' + m.toString()
+}
+export const monthday = () => {
+  let dateTime = new Date()
+  let M = dateTime.getMonth() + 1
+  let d = dateTime.getDate()
+  if (M < 10) {
+    M = '0' + M
+  }
+  if (d < 10) {
+    d = '0' + d
+  }
+  return M + '月' + d + '日'
+}
 function padLeftZero (str) {
   return ('00' + str).substr(str.length)
 }
